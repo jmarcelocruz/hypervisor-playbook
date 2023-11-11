@@ -8,3 +8,9 @@
       - cockpit
       - cockpit-pcp
       install_recommends: false
+  - name: Enable root login to Cockpit
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/cockpit/disallowed-users
+      line: root
+      state: absent
