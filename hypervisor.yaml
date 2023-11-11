@@ -1,2 +1,10 @@
 - name: Configure hypervisor type machines
   hosts: hypervisor
+  tasks:
+  - name: Install Cockpit
+    become: true
+    ansible.builtin.apt:
+      name:
+      - cockpit
+      - cockpit-pcp
+      install_recommends: false
