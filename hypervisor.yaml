@@ -14,3 +14,10 @@
       path: /etc/cockpit/disallowed-users
       line: root
       state: absent
+  - name: Install NetworkManager
+    become: true
+    ansible.builtin.apt:
+      name:
+      - network-manager
+      - cockpit-networkmanager
+      install_recommends: false
