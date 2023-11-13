@@ -42,3 +42,8 @@
       type: bridge-slave
       master: lanbr0
       state: present
+  - name: Install Podman
+    ansible.builtin.apt:
+      name:
+      - podman
+      - cockpit-podman
