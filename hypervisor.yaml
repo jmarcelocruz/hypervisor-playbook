@@ -55,3 +55,15 @@
     loop:
       - /etc/subuid
       - /etc/subgid
+  - name: Install libvirt
+    become: true
+    ansible.builtin.apt:
+      name:
+      - qemu-system
+      - qemu-utils
+      - libvirt-daemon-system
+      - libvirt-clients
+      - virtinst
+      - ovmf
+      - cockpit-machines
+      install_recommends: false
