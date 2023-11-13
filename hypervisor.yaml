@@ -47,3 +47,11 @@
       name:
       - podman
       - cockpit-podman
+  - name: Configure unprivileged containers
+    become: true
+    ansible.builtin.lineinfile:
+      path: "{{ item }}"
+      line: root:100000:65536
+    loop:
+      - /etc/subuid
+      - /etc/subgid
