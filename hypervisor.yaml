@@ -21,3 +21,18 @@
       - network-manager
       - cockpit-networkmanager
       install_recommends: false
+  - name: Configure lanbr0
+    become: true
+    ansible.builtin.nmcli:
+      conn_name: lanbr0
+      type: bridge
+      stp: false
+      mac: "{{ ansible_facts[ main_interface ]['macaddress'] }}"
+      state: present
+  - name: Configure lanbr0-port0
+    ansible.builtin.nmcli:
+      conn_name: lanbr0-port0
+      ifname: "{{ main_interface }}"
+      type: bridge-slave
+      master: lanbr0
+      state: present
