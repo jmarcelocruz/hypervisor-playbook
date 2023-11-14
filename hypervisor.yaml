@@ -14,3 +14,31 @@
       path: /etc/cockpit/disallowed-users
       line: root
       state: absent
+  - name: Install NetworkManager
+    become: true
+    ansible.builtin.apt:
+      name:
+      - network-manager
+      - cockpit-networkmanager
+      install_recommends: false
+  - name: Empty /etc/network/interfaces
+    become: true
+    ansible.builtin.copy:
+      dest: /etc/network/interfaces
+      content: |
+        # Emptied out via Ansible during configuration
+  - name: Configure lanbr0
+    become: true
+    ansible.builtin.nmcli:
+      conn_name: lanbr0
+      type: bridge
+      stp: false
+      mac: "{{ ansible_facts[ main_interface ]['macaddress'] }}"
+      state: present
+  - name: Configure lanbr0-port0
+    ansible.builtin.nmcli:
+      conn_name: lanbr0-port0
+      ifname: "{{ main_interface }}"
+      type: bridge-slave
+      master: lanbr0
+      state: present
