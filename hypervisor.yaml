@@ -21,6 +21,12 @@
       - network-manager
       - cockpit-networkmanager
       install_recommends: false
+  - name: Empty /etc/network/interfaces
+    become: true
+    ansible.builtin.copy:
+      dest: /etc/network/interfaces
+      content: |
+        # Emptied out via Ansible during configuration
   - name: Configure lanbr0
     become: true
     ansible.builtin.nmcli:
