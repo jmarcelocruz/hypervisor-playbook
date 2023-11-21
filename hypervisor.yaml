@@ -67,3 +67,10 @@
       - ovmf
       - cockpit-machines
       install_recommends: false
+  - name: Install NFS Server
+    become: true
+    ansible.builtin.apt:
+      name:
+      - nfs-common
+      - nfs-kernel-server
+      install_recommends: false
