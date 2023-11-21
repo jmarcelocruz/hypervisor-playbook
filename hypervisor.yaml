@@ -67,3 +67,22 @@
       - ovmf
       - cockpit-machines
       install_recommends: false
+  - name: Install NFS Server
+    become: true
+    ansible.builtin.apt:
+      name:
+      - nfs-common
+      - nfs-kernel-server
+      install_recommends: false
+  - name: Configure NFS exports
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/exports
+      line: "{{ item['path'] }} {{ item['options'] }}"
+      regexp: "^{{ item['path'] }} .*$"
+    loop: "{{ nfs_exports }}"
+  - name: Reload NFS Server
+    become: true
+    ansible.builtin.systemd:
+      name: nfs-server
+      state: reloaded
