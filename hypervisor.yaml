@@ -41,6 +41,7 @@
       ifname: "{{ main_interface }}"
       type: bridge-slave
       master: lanbr0
+      hairpin: false
       state: present
   - name: Install Podman
     ansible.builtin.apt:
